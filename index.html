@@ -40,6 +40,7 @@
     .buttons {
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
     }
     .button {
       padding: 10px 20px;
@@ -48,6 +49,8 @@
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s;
+      margin: 5px;
+      flex: 1;
     }
     .button.add {
       background-color: #4CAF50;
@@ -62,6 +65,20 @@
     }
     .button.subtract:hover {
       background-color: #d32f2f;
+    }
+    .button.multiply {
+      background-color: #FFC107;
+      color: #fff;
+    }
+    .button.multiply:hover {
+      background-color: #FFB300;
+    }
+    .button.divide {
+      background-color: #00BCD4;
+      color: #fff;
+    }
+    .button.divide:hover {
+      background-color: #00ACC1;
     }
     @media (max-width: 600px) {
       .calculator {
@@ -79,16 +96,36 @@
     <h1>Simple Calculator</h1>
     <div class="result" id="result">0</div>
     <div class="buttons">
-      <button class="button add" onclick="updateResult(1)">Add</button>
-      <button class="button subtract" onclick="updateResult(-1)">Subtract</button>
+      <!-- Existing Add and Subtract buttons -->
+      <button class="button add" onclick="updateResult('add')">Add</button>
+      <button class="button subtract" onclick="updateResult('subtract')">Subtract</button>
+      <!-- New Multiply and Divide buttons -->
+      <button class="button multiply" onclick="updateResult('multiply')">Multiply</button>
+      <button class="button divide" onclick="updateResult('divide')">Divide</button>
     </div>
   </div>
   <script>
     let currentResult = 0;
 
-    function updateResult(value) {
+    // Function to update the result based on the operation
+    function updateResult(operation) {
       try {
-        currentResult += value;
+        switch (operation) {
+          case 'add':
+            currentResult += 1; // Increment by 1 for add
+            break;
+          case 'subtract':
+            currentResult -= 1; // Decrement by 1 for subtract
+            break;
+          case 'multiply':
+            currentResult *= 2; // Multiply current result by 2
+            break;
+          case 'divide':
+            currentResult /= 2; // Divide current result by 2
+            break;
+          default:
+            throw new Error('Invalid operation');
+        }
         document.getElementById('result').textContent = currentResult;
       } catch (error) {
         alert('An error occurred: ' + error.message);
